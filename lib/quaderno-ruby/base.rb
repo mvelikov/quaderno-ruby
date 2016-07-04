@@ -51,6 +51,8 @@ module Quaderno
       response = get("#{url}authorization.json", basic_auth: { username: auth_token }, headers: version_header)
 
       if response.code == 200
+        @@auth_token = auth_token
+        @@url = response.parsed_response['identity']['href']
         response.parsed_response
       else
         raise(Quaderno::Exceptions::InvalidSubdomainOrToken, 'Invalid subdomain or token')
